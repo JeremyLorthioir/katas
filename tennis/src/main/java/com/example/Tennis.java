@@ -1,10 +1,12 @@
 package com.example;
 
 /**
- * Hello world!
+ * Hello Tennis!
  *
  */
 public class Tennis {
+	private static final String[] SCORE_NAMES = {"Love", "Fifteen", "Thirty", "Forty"};
+    
 	private int p1Point = 0;
 	private int p2Point = 0;
 	private String player1;
@@ -21,46 +23,25 @@ public class Tennis {
 		}
 
 		if (this.p1Point >= 4 || this.p2Point >= 4) {
-			return handleAdvantage();
+			return handleAdvantageOrWin();
 		}
 
 		return handleNormalScore();
 	}
 
 	private String handleDraw() {
-		switch (p1Point) {
-		case 0:
-			return "Love-All";
-		case 1:
-			return "Fifteen-All";
-		case 2:
-			return "Thirty-All";
-		case 3, 4:
-			return "Deuce";
-		default:
-			return "";
-		}
-	}
+        if (p1Point < 3) {
+            return SCORE_NAMES[p1Point] + "-All";
+        } else {
+            return "Deuce";
+        }
+    }
 
 	private String handleNormalScore() {
-		String score1 = switch (this.p1Point) {
-		case 0 -> "Love";
-		case 1 -> "Fifteen";
-		case 2 -> "Thirty";
-		default -> "Forty";
-		};
+        return SCORE_NAMES[p1Point] + "-" + SCORE_NAMES[p2Point];
+    }
 
-		var score2 = switch (this.p2Point) {
-		case 0 -> "Love";
-		case 1 -> "Fifteen";
-		case 2 -> "Thirty";
-		default -> "Forty";
-		};
-
-		return score1 + "-" + score2;
-	}
-
-	private String handleAdvantage() {
+	private String handleAdvantageOrWin() {
 		int minusResult = this.p1Point - this.p2Point;
 		if (minusResult == 1)
 			return "Advantage player1";
