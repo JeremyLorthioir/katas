@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 
 /**
- * Unit test for simple App.
+ * Unit test for simple Tennis.
  */
 public class TennisTest 
 {

@@ -5,8 +5,8 @@ package com.example;
  *
  */
 public class Tennis {
-	private int p1_point = 0;
-	private int p2_point = 0;
+	private int p1Point = 0;
+	private int p2Point = 0;
 	private String player1;
 	private String player2;
 
@@ -16,40 +16,41 @@ public class Tennis {
 	}
 
 	public String getScore() {
-		if (this.p1_point == p2_point) {
-			switch (p1_point) {
-			case 0:
-				return "Love-All";
-			case 1:
-				return "Fifteen-All";
-			case 2:
-				return "Thirty-All";
-			case 3:
-			case 4:
-				return "Deuce";
-			}
+		if (this.p1Point == p2Point) {
+			return handleDraw();
 		}
 
-		if (this.p1_point >= 4 || this.p2_point >= 4) {
-			int minusResult = this.p1_point - this.p2_point;
-			if (minusResult == 1)
-				return "Advantage player1";
-			else if (minusResult == -1)
-				return "Advantage player2";
-			else if (minusResult >= 2)
-				return "Win for player1";
-			else
-				return "Win for player2";
+		if (this.p1Point >= 4 || this.p2Point >= 4) {
+			return handleAdvantage();
 		}
 
-		String score1 = switch (this.p1_point) {
+		return handleNormalScore();
+	}
+
+	private String handleDraw() {
+		switch (p1Point) {
+		case 0:
+			return "Love-All";
+		case 1:
+			return "Fifteen-All";
+		case 2:
+			return "Thirty-All";
+		case 3, 4:
+			return "Deuce";
+		default:
+			return "";
+		}
+	}
+
+	private String handleNormalScore() {
+		String score1 = switch (this.p1Point) {
 		case 0 -> "Love";
 		case 1 -> "Fifteen";
 		case 2 -> "Thirty";
 		default -> "Forty";
 		};
 
-		var score2 = switch (this.p2_point) {
+		var score2 = switch (this.p2Point) {
 		case 0 -> "Love";
 		case 1 -> "Fifteen";
 		case 2 -> "Thirty";
@@ -59,16 +60,25 @@ public class Tennis {
 		return score1 + "-" + score2;
 	}
 
-	public void wonPoint(String player) {
-		if (player == this.player1) {
-			this.p1_point += 1;
-			return;
-		}
+	private String handleAdvantage() {
+		int minusResult = this.p1Point - this.p2Point;
+		if (minusResult == 1)
+			return "Advantage player1";
+		else if (minusResult == -1)
+			return "Advantage player2";
+		else if (minusResult >= 2)
+			return "Win for player1";
+		else
+			return "Win for player2";
+	}
 
-		if (player == this.player2) {
-			this.p2_point += 1;
-			return;
+	public void wonPoint(String player) {
+		if (this.player1.equals(player)) {
+			this.p1Point++;
 		}
-		return;
+		
+		if (this.player2.equals(player)) {
+			this.p2Point++;
+		}
 	}
 }
