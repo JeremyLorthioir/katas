@@ -41,19 +41,19 @@ class MarsRoverTest {
 	 
 	
 	@ParameterizedTest(name = "{index} ==> Rover facing {0} and turning {1} should face {2}")
-    @MethodSource("getAllTurns")
+	@MethodSource("getAllTurns")
 	public void checkRoverTurns(Direction facingDirection, String direction, Direction expectedfacingDirection) {
-		MarsRover rover = new MarsRover(new int []{0, 0}, facingDirection);
+		MarsRover rover = new MarsRover(new Position(0, 0), facingDirection);
 		rover.turn(direction);
 		assertEquals(expectedfacingDirection, rover.getFacingDirection());
 	}
-	
+
 	@ParameterizedTest(name = "{index} ==> Rover facing {0} and moving {1} should be on coordinate {2}:{3}")
-    @MethodSource("getAllMoves")
+	@MethodSource("getAllMoves")
 	public void checkRoverMoves(Direction facingDirection, String direction, int expectedX, int expectedY) {
-		MarsRover rover = new MarsRover(new int []{0, 0}, facingDirection);
+		MarsRover rover = new MarsRover(new Position(0, 0), facingDirection);
 		rover.move(direction);
-		assertEquals(expectedX, rover.getPositionX());
-		assertEquals(expectedY, rover.getPositionY());
+		assertEquals(expectedX, rover.getPosition().getX());
+		assertEquals(expectedY, rover.getPosition().getY());
 	}
 }
