@@ -46,15 +46,14 @@ class MarsRover {
         }
     }
 
-
 	public Direction getFacingDirection() {
 		return facingDirection;
 	}
-	
+
 	public Position getPosition() {
 		return this.position;
 	}
-	
+
 	public enum Direction {
         N, S, E, W;
 
